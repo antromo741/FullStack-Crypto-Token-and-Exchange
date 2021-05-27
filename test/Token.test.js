@@ -4,7 +4,7 @@ require('chai')
 .use(require('chai-as-promised'))
 .should()
 
-contract('Token', (accounts) => {
+contract('Token', ([deployer]) => {
     const name = "Romulon Token"
     const symbol = "ROM"
     const decimals = "18"
@@ -39,6 +39,11 @@ contract('Token', (accounts) => {
 
         it('tracks the total supply', async () => {
             const result = await token.totalSupply()
+            result.toString().should.equal(totalSupply)
+        })
+
+        it('tracks the total supply to the deployer', async () => {
+            const result = await token.balanceOf(deployer)
             result.toString().should.equal(totalSupply)
         })
     })
