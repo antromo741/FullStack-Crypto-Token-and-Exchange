@@ -1,3 +1,5 @@
+import { tokens } from "./helpers"
+
 const Token = artifacts.require('./Token')
 
 require('chai')
@@ -8,7 +10,7 @@ contract('Token', ([deployer, reciever]) => {
     const name = "Romulon Token"
     const symbol = "ROM"
     const decimals = "18"
-    const totalSupply = "1000000000000000000000000"
+    const totalSupply = tokens(1000000).toString
     let token 
 
 
@@ -39,28 +41,45 @@ contract('Token', ([deployer, reciever]) => {
 
         it('tracks the total supply', async () => {
             const result = await token.totalSupply()
-            result.toString().should.equal(totalSupply)
+            result.toString().should.equal(totalSupply.toString())
         })
 
         it('tracks the total supply to the deployer', async () => {
             const result = await token.balanceOf(deployer)
-            result.toString().should.equal(totalSupply)
+            result.toString().should.equal(totalSupply.toString())
         })
     })
 
     describe('sending tokens', () => {
+
+        let result
+        let amount
+
+        describe('success', () => {
+            beforeEach(async () => {
+                amount = tokens(100)
+                result = await token.transfer(receiver, amount, { from: deployer })
+            })
+
         it('transfers token balnces', async () => {
             let balanceOf
             //Before transfer
             balanceOf = await token.balanceOf(deployer)
-            console.log("deployer balance before transfer", balanceOf.toString())
+            balanceOf.toString().should.equal(tokens(999900).toString())
             balanceOf = await token.balanceOf(reciever)
-            console.log("reciever balance before transfer", balanceOf.toString())
-            
-            //Transfer
-            await token.transfer(reciever, '100000000000000000000', { from: deployer })
+           balanceOf.toString().should.equal(tokens(100).toString())
+        }) 
 
-            //After transfer
+        it('emits a Transfer event', () => {
+            const log = result.logs[0]
+            log.event.should.eq('Transfer')
+            const event = log.args
+            event.from.toString().should.equal(deployer, 'from is correct')
+            event.to.should.equal(receiver, 'to is correct')
+            event.value.toString().should.equal(amount.toString(), 'value is correct')
+        })
+   
+        //After transfer
             
         })
     })
