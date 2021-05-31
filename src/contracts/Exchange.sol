@@ -19,6 +19,10 @@ contract Exchange {
         feePercent = _feePercent;
     }
 
+    //Fallback: reverts if Ether is sent to this smart contract by mistake
+    function() external {
+        revert();
+    }
 
     function depositEther() payable public {
     tokens[ETHER][msg.sender] = tokens[ETHER][msg.sender].add(msg.value);
