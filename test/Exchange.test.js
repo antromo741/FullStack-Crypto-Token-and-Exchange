@@ -51,6 +51,9 @@ contract('Exchange', ([deployer, feeAccount, user1]) => {
                 let balance
                 balance = await token.balanceOf(exchange.address)
                 balance.toString().should.equal(amount.toString())
+                // check tokens on exchange
+                balance = await exchange.tokens(token.address, user1)
+                balance.toString().should.equal(amount.toString())
             })
         })
 
