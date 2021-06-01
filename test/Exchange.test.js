@@ -115,7 +115,7 @@ contract('Exchange', ([deployer, feeAccount, user1]) => {
         })
     })
 
-    describe('withdrawing ETHER', async () => {
+    describe('withdrawing Ether', async () => {
         let result
         let amount
 
@@ -134,10 +134,23 @@ contract('Exchange', ([deployer, feeAccount, user1]) => {
                 const balance = await exchange.tokens(ETHER_ADDRESS, user1)
                 balance.toString().should.equal('0')
             })
+
+            it('emits a "Withdraw" event', async () => {
+                const log = result.logs[0]
+                log.event.should.eq('Withdraw')
+                const event = log.args
+                event.token.should.equal(ETHER_ADDRESS)
+                event.user.should.equal(user1)
+                event.amount.toString().should.equal(ether(1).toString())
+                event.balance.toString().should.equal('0')
+
+            })
         })
 
         describe('failure', async () => {
-
+            it('rejects withdraws for isufficient balances', async () => {
+                await exchange.withdrawEther(ether(100), { from : user1 }).souhld.be.rejectedWith(EVM_REVERT)
+            })
         })
         
 
