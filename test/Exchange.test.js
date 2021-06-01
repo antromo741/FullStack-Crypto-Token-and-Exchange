@@ -201,9 +201,16 @@ contract('Exchange', ([deployer, feeAccount, user1]) => {
                 await exchange.withdrawToken(token.address, tokens(10), { from: user1 }).should.be.rejectedWith(EVM_REVERT)
             })
         })
+    })
 
+    describe('checking balances', async () => {
+        beforeEach(async () => {
+            exchange.depositEther({ from: user1 , value: ether(1) })
+        } )
 
-
-
+        it('returns user balance', async () => {
+            const result = await exchange.balanceOf(ETHER_ADDRESS, user1)
+            result.toString().should.equal(ether(1).toString())
+        })
     })
 })
