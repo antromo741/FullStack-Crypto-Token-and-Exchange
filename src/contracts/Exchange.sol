@@ -10,10 +10,20 @@ contract Exchange {
     uint256 public feePercent; //THe fee percentage
     address constant ETHER = address(0); //store ether in tokens mapping with blank addess
     mapping(address => mapping(address => uint256)) public tokens;
+    mapping(uint256 => _Order) public orders;
 
     //Events
     event Deposit(address token, address user, uint256 amount, uint256 balance);
     event Withdraw(address token, address user, uint amount, uint balance);
+
+    struct _Order {
+        uint id;
+        address user;
+        address tokenGet;
+        uint amountGet;
+        address tokenGive;
+        uint timestamp;
+    }
 
     constructor (address _feeAccount, uint256 _feePercent) public {
         feeAccount = _feeAccount; //state variable set equal to the local variable
