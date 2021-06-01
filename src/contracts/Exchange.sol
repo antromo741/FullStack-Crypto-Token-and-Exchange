@@ -25,8 +25,12 @@ contract Exchange {
     }
 
     function depositEther() payable public {
-    tokens[ETHER][msg.sender] = tokens[ETHER][msg.sender].add(msg.value);
-    emit Deposit(ETHER, msg.sender, msg.value, tokens[ETHER][msg.sender]);
+        tokens[ETHER][msg.sender] = tokens[ETHER][msg.sender].add(msg.value);
+        emit Deposit(ETHER, msg.sender, msg.value, tokens[ETHER][msg.sender]);
+    }
+
+    function withdrawEther(uint _amount) public {
+        tokens[ETHER][msg.sender] = tokens[ETHER][msg.sender].sub(_amount);
     }
 
     function depositToken(address _token, uint256 _amount) public {
