@@ -169,7 +169,7 @@ contract('Exchange', ([deployer, feeAccount, user1]) => {
                 //Deposit tokens
                 amount = tokens(10)
                 await token.approve(exchange.address, amount, { from: user1 })
-                await exchange.depositToken(token.addres, amount, { from: user1 })
+                await exchange.depositToken(token.address, amount, { from: user1 })
 
                 //Withdraw tokens
                 result = await exchange.withdrawToken(token.address, amount, { from: user1 })
@@ -184,7 +184,7 @@ contract('Exchange', ([deployer, feeAccount, user1]) => {
                 const log = result.logs[0]
                 log.event.should.eq('Withdraw')
                 const event = log.args
-                event.token.should.equal(token.adress)
+                event.token.should.equal(token.address)
                 event.user.should.equal(user1)
                 event.amount.toString().should.equal(amount.toString())
                 event.balance.toString().should.equal('0')
@@ -193,8 +193,12 @@ contract('Exchange', ([deployer, feeAccount, user1]) => {
         })
 
         describe('failure', async () => {
+            it('rejects Ether withdraws', async () => {
+                await exchange.withdrawToken(ETHER_ADDRESS, tokens(10), { from: user1 }).should.be.rejectedWith(EVM_REVERT)
+            })
+            
             it('rejects withdraws for isufficient balances', async () => {
-                await exchange.withdrawToken(tokens(10), { from: user1 }).souhld.be.rejectedWith(EVM_REVERT)
+                await exchange.withdrawToken(token.address, tokens(10), { from: user1 }).should.be.rejectedWith(EVM_REVERT)
             })
         })
 
