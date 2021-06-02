@@ -22,6 +22,7 @@ contract Exchange {
         address tokenGet,
         uint256 amountGet,
         address tokenGive,
+        uint256 amountGive,
         uint256 timestamp
     );
 
@@ -32,6 +33,7 @@ contract Exchange {
         address tokenGet;
         uint256 amountGet;
         address tokenGive;
+        uint256 amountGive;
         uint256 timestamp;
     }
 
@@ -82,8 +84,8 @@ contract Exchange {
 
     function makeOrder(address _tokenGet, uint256 _amountGet, address _tokenGive, uint256 _amountGive) public {
         orderCount = orderCount.add(1);
-        orders[orderCount] = _Order(_id, msg.sender, _tokenGet, _amountGet, _tokenGive, _amountGive, now);
-        emit Order(orderCount, msg.sender, tokenGet, _amountGet, _tokenGive, _amountGive, now);
+        orders[orderCount] = _Order(orderCount, msg.sender, _tokenGet, _amountGet, _tokenGive, _amountGive, now);
+        emit Order(orderCount, msg.sender, _tokenGet, _amountGet, _tokenGive, _amountGive, now);
     }
 
 }
