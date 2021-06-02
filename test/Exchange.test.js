@@ -228,22 +228,22 @@ contract('Exchange', ([deployer, feeAccount, user1]) => {
             order.id.toString().should.equal('1', 'id is correct')
             order.user.should.equal(user1, 'user is correct')
             order.tokenGet.should.equal(token.address, ' tokenGet is correct')
-            order.amountGet.toSting().should.equal(tokens(1).toSting(), 'amountGet is correct')
+            order.amountGet.toString().should.equal(tokens(1).toString(), 'amountGet is correct')
             order.tokenGive.should.equal(ETHER_ADDRESS, 'tokenGive is correct')
-            order.amoountGive.toString().should.equal(ether(1).toString(), 'amoountGive is correct')
+            order.amountGive.toString().should.equal(ether(1).toString(), 'amoountGive is correct')
             order.timestamp.toString().length.should.be.at.least(1), 'timestamp is preset'
         })
 
-        ut('emits an "order" event', async () => {
+        it('emits an "order" event', async () => {
             const log = result.logs[0]
             log.event.should.eq('Order')
             const event = log.args
-            event.id.toSting().should.equal('1', 'id is correct')
+            event.id.toString().should.equal('1', 'id is correct')
             event.user.should.equal(user1, 'user is correct')
             event.tokenGet.should.equal(token.address, 'tokenGet is correct')
             event.amountGet.toString().should.equal(tokens(1).toString(), ' amountGet is correct')
             event.tokenGive.should.equal(ETHER_ADDRESS, 'tokenGive is correct')
-            event.aountGive.toString().should.equal(ether(1).toString(), ' amountGive is correct')
+            event.amountGive.toString().should.equal(ether(1).toString(), ' amountGive is correct')
             event.timestamp.toString().length.should.be.at.least(1, 'timestamp is present')
         })
     })
