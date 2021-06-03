@@ -26,7 +26,7 @@ contract Exchange {
         uint256 amountGive,
         uint256 timestamp
     );
-    
+
     event Cancel(
         uint256 id,
         address user,
@@ -106,6 +106,28 @@ contract Exchange {
         require(_order.id == _id); //Make sure the order exists
         orderCancelled[_id] = true;
         emit Cancel(_order.id, msg.sender, _order.tokenGet, _order.amountGet, _order.tokenGive, _order.amountGive, now);
+    }
+
+    function fillOrder(uint256 _id) public {
+        _Order storage _order = orders[_id];
+        _trade(_order.id, _order.tokenGet, _order.amountGet, _order.tokenGive, _order.amountGive);
+
+
+        
+    }
+
+    function _trade(uint256 _orderId, address _user, address _tokenGet, uint256 _amountGet, address _tokenGive, uint256 _amountGive) internal{
+       //fee paid by user who fills order aka msg sender
+       //fee deducted from _amountGet
+        uint256 _feeAmount = _amountGive.mul(feePercent).div(100);
+        
+        //user creates the order and msg sender fills the order
+        tokens[_tokenGet][msg.sender] = tokens[_tokenGet][msg.sender].sub(_amountGet.add(_feeAmount));
+        tokens[_tokenGet][_user] = tokens[_tokenGet][_user].add(_amountGet);
+        //adds fees
+        tokens[_tokenGive][feeAccount] = tokens[_tokenGet][feeAccount].add(_feeAmount);
+        tokens[_tokenGive][_user] = tokens[_tokenGive][_user].sub(_amountGive);
+        tokens[_tokenGive][msg.sender] = tokens[_tokenGive][msg.sender].add(_amountGive);
     }
 
 }
