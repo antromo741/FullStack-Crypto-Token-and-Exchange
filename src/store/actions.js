@@ -5,3 +5,10 @@ export function web3Loaded(connection) {
         connection
     }
 }
+
+export function web3AccountLoaded(account) {
+    return {
+        type: 'WEB3_Account_LOADED',
+        account
+    }
+}
