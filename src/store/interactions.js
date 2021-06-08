@@ -1,4 +1,8 @@
+import Web3 from 'web3';
+import {
+    web3Loaded
 
+} from './actions'
 
 export const loadWeb3 = async (dispatch) => {
     if (typeof window.ethereum !== 'undefined') {
