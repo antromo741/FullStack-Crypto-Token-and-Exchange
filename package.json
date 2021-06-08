@@ -9,6 +9,7 @@
     "node": "8.11.1"
   },
   "dependencies": {
+    "@metamask/legacy-web3": "^2.0.0",
     "@truffle/hdwallet-provider": "1.1.0",
     "apexcharts": "^3.6.3",
     "babel-polyfill": "6.26.0",

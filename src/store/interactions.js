@@ -1,3 +1,4 @@
+import '@metamask/legacy-web3'
 import Web3 from 'web3';
 import {
     web3Loaded,
@@ -18,8 +19,10 @@ export const loadWeb3 = async (dispatch) => {
 
 export const loadAccount = async (web3, dispatch) => {
     const accounts = await web3.eth.getAccounts()
-    const account = await accounts[0]
+    const account = await accounts[0] 
+    await window.ethereum.enable()
     if (typeof account !== 'undefined') {
+       
         dispatch(web3AccountLoaded(account))
         return account
     } else {
