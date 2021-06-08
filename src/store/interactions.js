@@ -2,9 +2,11 @@ import '@metamask/legacy-web3'
 import Web3 from 'web3';
 import {
     web3Loaded,
-    web3AccountLoaded
+    web3AccountLoaded,
+    tokenLoaded
 
 } from './actions'
+import Token from '../abis/Token.json'
 
 export const loadWeb3 = async (dispatch) => {
     if (typeof window.ethereum !== 'undefined') {
@@ -27,6 +29,17 @@ export const loadAccount = async (web3, dispatch) => {
         return account
     } else {
         window.alert('Please login with MetaMask')
+        return null
+    }
+}
+
+export const loadToken = async (web3, networkId, dispatch) => {
+    try {
+        const token = new web3.eth.Contract(Token.abi, Token.networks[networkId].address)
+        dispatch(tokenLoaded(token))
+        return token
+    } catch (error) {
+        console.log('Contract not deployed to the current network. Please select another network with Metamask.')
         return null
     }
 }
