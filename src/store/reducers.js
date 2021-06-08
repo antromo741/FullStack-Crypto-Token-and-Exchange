@@ -1,3 +1,6 @@
+import { combineReducers } from 'redux';
+
+
 function web3(state = {}, action) {
     switch (action.type) {
         default: 
@@ -5,3 +8,9 @@ function web3(state = {}, action) {
 
     }
 }
+
+const rootReducer = combineReducers({
+    web3
+})
+
+export default rootReducer
