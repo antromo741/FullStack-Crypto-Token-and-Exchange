@@ -9,7 +9,7 @@ import {
   loadToken,
   loadExchange} 
   from '../store/interactions'
-
+import { accountSelector } from '../store/selectors'
 class App extends Component {
 
   componentWillMount() {
@@ -28,6 +28,7 @@ class App extends Component {
   }
 
   render() {
+    console.log(this.props.account)
     return (
       <div className="App">
       <h1>Hello</h1>
@@ -38,7 +39,7 @@ class App extends Component {
 }
 function mapStateToProps(state) {
   return {
-
+    account: accountSelector(state)
   }
 }
 
