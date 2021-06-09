@@ -24,9 +24,17 @@ class App extends Component {
     await web3.eth.net.getNetworkType()
     const networkId = await web3.eth.net.getId()
     await loadAccount(web3, dispatch)
-    const token = loadToken(web3, networkId, dispatch)
-    loadExchange(web3, networkId, dispatch)
-    
+    const token = await loadToken(web3, networkId, dispatch)
+    if(!token) {
+      window.alert('Token smart contract not dedected on the current network. Please select another network with metamask.')
+      return
+    }
+
+    const exchange = await loadExchange(web3, networkId, dispatch)
+    if (!exchange) {
+      window.alert('Exchange smart contract not dedected on the current network. Please select another network with metamask.')
+    return
+    }
     
   }
 
