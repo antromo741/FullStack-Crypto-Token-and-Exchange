@@ -54,9 +54,16 @@ const decorateOrder = (order) => {
         etherAmount = order.amountGet
         tokenAmount = order.amountGive
     }
+
+    //calculate token price to 5 decimal places
+    const precision = 100000
+    let tokenPrice = (etherAmount / tokenAmount)
+    tokenPrice = Math.round(tokenPrice * precision) / precision
+
     return({
         ...order,
         etherAmount: ether(etherAmount), 
-        tokenAmount: tokens(tokenAmount)
+        tokenAmount: tokens(tokenAmount),
+        tokenPrice
     })
 }
