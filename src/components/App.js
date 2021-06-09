@@ -10,7 +10,8 @@ import {
   loadAccount, 
   loadToken,
   loadExchange} 
-  from '../store/interactions'
+from '../store/interactions'
+import  {contractsLoadedSelector } from '../store/selectors'
 
 class App extends Component {
 
@@ -34,14 +35,16 @@ class App extends Component {
     return (
       <div className="App">
         <Navbar />
-        <Content />
+        {  this.props.contractsLoaded ? <Content /> : <div className="content" ></div>}
+       
       </div>
     );
   }
 }
 function mapStateToProps(state) {
+  
   return {
-
+    contractsLoaded: contractsLoadedSelector(state)
   }
 }
 
