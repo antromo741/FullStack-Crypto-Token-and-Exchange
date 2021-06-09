@@ -25,6 +25,23 @@ const filledOrders = state => get(state, 'exchange.filledOrders.data', [])
 export const filledOrdersSelector = createSelector(
     filledOrders,
     (orders) => {
+        //Decorate the orders
+        orders = decorateFilledOrders(orders)
+        //sort orders for display
+        orders = orders.sort((a,b) => b.timestamp - a.timestamp)
         console.log(orders)
     }
 )
+
+const decorateFilledOrders = (orders) => {
+    return(
+        orders.map((order) => {
+            return order = decorateOrder(order)
+        })
+    )
+}
+
+const decorateOrder = (order) => {
+    //
+    return order
+}
