@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { loadAllOrders } from '../store/interactions'
 import { exchangeSelector } from '../store/selectors'
+import  Trades  from './Trades'
 class Content extends Component {
     
     
@@ -16,10 +17,14 @@ class Content extends Component {
 
 render() {
     return (
-        <div> 
+        <div className="content"> 
         <h1>Hello</h1>
         <p>Romo</p>
+        <div className="verical">
+            <Trades />
         </div>
+        </div>
+
     )
 }
 }
