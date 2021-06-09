@@ -4,7 +4,8 @@ import {
     web3Loaded,
     web3AccountLoaded,
     tokenLoaded,
-    exchangeLoaded
+    exchangeLoaded,
+    cancelledOrdersLoaded
 
 } from './actions'
 import Token from '../abis/Token.json'
@@ -60,7 +61,10 @@ export const loadExchange = async (web3, networkId, dispatch) => {
 export const loadAllOrders = async (exchange, dispatch) => {
     //Fetch cancelled orders with the cancel event steam
     const cancelStream = await exchange.getPastEvents('Cancel', { fromBlock: 0, toBlock: 'latest'})
-    console.log(cancelStream)
+    //Format Cancelled Orders
+    const cancelledOrders = await cancelStream.map((event) => event.returnValues)
+    //add cancelled order to redux store
+    dispatch(cancelledOrdersLoaded(cancelledOrders))
 
     //fetch filled orders with the trade event stream
 
