@@ -42,6 +42,20 @@ const decorateFilledOrders = (orders) => {
 }
 
 const decorateOrder = (order) => {
-    //
-    return order
+    let etherAmount
+    let tokenAmount
+    
+    //if tokengive
+    if(order.tokenGiven == "0x0000000000000000000000000000000000000000") {
+        etherAmount = order.amountGive
+        tokenAmount = order.amountGet
+    } else {
+        etherAmount = order.amountGet
+        tokenAmount = order.amountGive
+    }
+    return({
+        ...order,
+        etherAmount: etherAmount, 
+        tokenAmount: tokenAmount
+    })
 }
