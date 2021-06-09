@@ -56,3 +56,16 @@ export const loadExchange = async (web3, networkId, dispatch) => {
         return null
     }
 }
+
+export const loadAllOrders = async (exchange, dispatch) => {
+    //Fetch cancelled orders with the cancel event steam
+    const cancelStream = await exchange.getPastEvents('Cancel', { fromBlock: 0, toBlock: 'latest'})
+    console.log(cancelStream)
+
+    //fetch filled orders with the trade event stream
+
+    
+
+
+    //fetch all orders with the order event stream
+}

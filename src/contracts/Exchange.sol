@@ -150,12 +150,3 @@ contract Exchange {
 
 
 
-
-//Manage Orders
-
-
-
-
-
-
-//Handle Trades
