@@ -1,5 +1,6 @@
 import { get } from 'lodash'
 import { createSelector } from 'reselect'
+import moment from 'moment'
 import { ETHER_ADDRESS, tokens, ether } from '../helpers'
 
 const account = state => get(state, 'web3.account')
@@ -64,6 +65,7 @@ const decorateOrder = (order) => {
         ...order,
         etherAmount: ether(etherAmount), 
         tokenAmount: tokens(tokenAmount),
-        tokenPrice
+        tokenPrice,
+        formattedTimeStamp: moment.unix(order.timestamp).format('h:mm:ss a M/D')
     })
 }
