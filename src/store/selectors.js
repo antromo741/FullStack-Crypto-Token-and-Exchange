@@ -18,3 +18,13 @@ export const contractsLoadedSelector = createSelector(
     exchangeLoaded,
     (tl, el) => (tl && el)
 )
+const filledOrdersLoaded = state => get(state, 'filledOrders.loaded', false)
+export const filledOrdersLoadedSelector = createSelector(filledOrdersLoaded, loaded => loaded)
+
+const filledOrders = state => get(state, 'exchange.filledOrders.data', [])
+export const filledOrdersSelector = createSelector(
+    filledOrders,
+    (orders) => {
+        console.log(orders)
+    }
+)
