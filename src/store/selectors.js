@@ -1,10 +1,10 @@
 import { get } from 'lodash'
 import { createSelector } from 'reselect'
 import moment from 'moment'
-import { ETHER_ADDRESS, tokens, ether, GREEN, RED } from '../helpers'
+import { ETHER_ADDRESS, GREEN, RED, tokens, ether } from '../helpers'
 
 const account = state => get(state, 'web3.account')
-export const accountSelector = createSelector(account, a => a )
+export const accountSelector = createSelector(account, a => a)
 
 const tokenLoaded = state => get(state, 'token.loaded', false)
 export const tokenLoadedSelector = createSelector(tokenLoaded, tl => tl)
@@ -20,6 +20,7 @@ export const contractsLoadedSelector = createSelector(
     exchangeLoaded,
     (tl, el) => (tl && el)
 )
+
 const filledOrdersLoaded = state => get(state, 'exchange.filledOrders.loaded', false)
 export const filledOrdersLoadedSelector = createSelector(filledOrdersLoaded, loaded => loaded)
 
@@ -27,12 +28,12 @@ const filledOrders = state => get(state, 'exchange.filledOrders.data', [])
 export const filledOrdersSelector = createSelector(
     filledOrders,
     (orders) => {
-        //sort orders by date ascendidng for price comparasion
-        orders = orders.sort((a,b) => a.timestamp - b.timestamp)
-        //Decorate the orders
+        // Sort orders by date ascending for price comparison
+        orders = orders.sort((a, b) => a.timestamp - b.timestamp)
+        // Decorate the orders
         orders = decorateFilledOrders(orders)
-        //sort orders for display
-        orders = orders.sort((a,b) => b.timestamp - a.timestamp)
+        // Sort orders by date descending for display
+        orders = orders.sort((a, b) => b.timestamp - a.timestamp)
         return orders
     }
 )
@@ -53,9 +54,8 @@ const decorateFilledOrders = (orders) => {
 const decorateOrder = (order) => {
     let etherAmount
     let tokenAmount
-    
-    //if tokengive
-    if(order.tokenGiven == ETHER_ADDRESS) {
+
+    if (order.tokenGive == ETHER_ADDRESS) {
         etherAmount = order.amountGive
         tokenAmount = order.amountGet
     } else {
@@ -63,14 +63,14 @@ const decorateOrder = (order) => {
         tokenAmount = order.amountGive
     }
 
-    //calculate token price to 5 decimal places
+    // Calculate token price to 5 decimal places
     const precision = 100000
     let tokenPrice = (etherAmount / tokenAmount)
     tokenPrice = Math.round(tokenPrice * precision) / precision
 
-    return({
+    return ({
         ...order,
-        etherAmount: ether(etherAmount), 
+        etherAmount: ether(etherAmount),
         tokenAmount: tokens(tokenAmount),
         tokenPrice,
         formattedTimestamp: moment.unix(order.timestamp).format('h:mm:ss a M/D')
@@ -78,23 +78,23 @@ const decorateOrder = (order) => {
 }
 
 const decorateFilledOrder = (order, previousOrder) => {
-    return({
+    return ({
         ...order,
-        takenPriceClass: tokenPriceClass(order.tokenPrice, order.id, previousOrder)
+        tokenPriceClass: tokenPriceClass(order.tokenPrice, order.id, previousOrder)
     })
 }
 
 const tokenPriceClass = (tokenPrice, orderId, previousOrder) => {
-    //show green if only one ordr exists
-    if(previousOrder.id === orderId) {
+    // Show green price if only one order exists
+    if (previousOrder.id === orderId) {
         return GREEN
     }
-    //show green if order price higher than the previous
-    //show red if order price lower than the prev
-    if(previousOrder.tokenPrice <= tokenPrice ) {
-        return GREEN //success
+
+    // Show green price if order price higher than previous order
+    // Show red price if order price lower than previous order
+    if (previousOrder.tokenPrice <= tokenPrice) {
+        return GREEN // success
     } else {
-        return RED //Danger
+        return RED // danger
     }
-    
 }
