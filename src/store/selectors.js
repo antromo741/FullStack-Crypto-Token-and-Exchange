@@ -1,7 +1,7 @@
 import { get } from 'lodash'
 import { createSelector } from 'reselect'
 import moment from 'moment'
-import { ETHER_ADDRESS, tokens, ether } from '../helpers'
+import { ETHER_ADDRESS, tokens, ether, GREEN, RED } from '../helpers'
 
 const account = state => get(state, 'web3.account')
 export const accountSelector = createSelector(account, a => a )
@@ -38,6 +38,8 @@ export const filledOrdersSelector = createSelector(
 )
 
 const decorateFilledOrders = (orders) => {
+    //track previous order to compare history
+    let previousOrder = orders[0]
     return(
         orders.map((order) => {
             order = decorateOrder(order)
@@ -83,10 +85,13 @@ const decorateFilledOrder = (order, previousOrder) => {
 }
 
 const tokenPriceClass = (tokenPrice, orderId, previousOrder) => {
+    //show green if only one ordr exists
+    if(previousOrder.id === orderId) {
+        return GREEN
+    }
     //show green if order price higher than the previous
     //show red if order price lower than the prev
-
-    if(previousOrder.tokenPrice <= tokenPrice ){
+    if(previousOrder.tokenPrice <= tokenPrice ) {
         return GREEN //success
     } else {
         return RED //Danger
