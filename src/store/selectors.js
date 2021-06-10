@@ -110,6 +110,38 @@ const tokenPriceClass = (tokenPrice, orderId, previousOrder) => {
         return RED // danger
     }
 }
+const openOrders = state => {
+    const all = allOrders(state)
+    const filled = filledOrders(state)
+    const cancelled = cancelledOrders(state)
+    
+
+    const openOrders = reject(all, (order) => {
+        const orderFilled = filled.some((o) => o.id === order.id)
+        const orderCancelled = cancelled.some((o) => o.id === order.id)
+        return(orderFilled || orderCancelled)
+    })
+    return openOrders
+}
 
 //were saying orderbookloaded depends on the others to be loaded
 const orderBookLoaded = state => cancelledOrdersLoaded(state) && filledOrdersLoaded(state) && allOrdersLoaded(state)
+
+//create order Book
+export const orderBookSelector = createSelector(
+    openOrders,
+    (orders) => {
+        //Decorate orders
+        return orders
+    }
+)
+
+
+
+
+
+
+
+
+
+
