@@ -20,7 +20,7 @@ render() {
         <div className="content"> 
         <h1>Hello</h1>
         <p>Romo</p>
-        <div className="vertical">
+        <div>
             <Trades />
         </div>
         </div>

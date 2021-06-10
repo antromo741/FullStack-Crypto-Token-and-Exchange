@@ -10,10 +10,10 @@ const showFilledOrders = (filledOrders) => {
         <tbody>
             { filledOrders.map((order) => {
                 return (
-                    <tr>
-                        <td>foo</td>
-                        <td>bar</td>
-                        <td>baz</td>
+                    <tr className={`order-${order.id}`} key={order.id}>
+                        <td className="text-muted">{order.formattedTimestamp}</td>
+                        <td>{order.tokenAmount}</td>
+                        <td className={`text-${order.tokenPriceClass}`}>{order.tokenPrice}</td>
                     </tr>
                 )
             })}
@@ -35,10 +35,9 @@ class Trades extends Component {
                         <th>Time</th>
                         <th>ROM</th>
                         <th>ROM/ETH</th> 
-                        {this.props.filledOrdersLoaded ? showFilledOrders(this.props.filledOrders) : <tbody></tbody>}
                         </tr>
                         </thead>
-                   
+                   {this.props.filledOrdersLoaded ? showFilledOrders(this.props.filledOrders) : <tbody> </tbody>}
                 </table>
             </div>
         </div>

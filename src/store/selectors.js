@@ -20,7 +20,7 @@ export const contractsLoadedSelector = createSelector(
     exchangeLoaded,
     (tl, el) => (tl && el)
 )
-const filledOrdersLoaded = state => get(state, 'filledOrders.loaded', false)
+const filledOrdersLoaded = state => get(state, 'exchange.filledOrders.loaded', false)
 export const filledOrdersLoadedSelector = createSelector(filledOrdersLoaded, loaded => loaded)
 
 const filledOrders = state => get(state, 'exchange.filledOrders.data', [])
@@ -38,14 +38,14 @@ export const filledOrdersSelector = createSelector(
 )
 
 const decorateFilledOrders = (orders) => {
-    //track previous order to compare history
+    // Track previous order to compare history
     let previousOrder = orders[0]
-    return(
+    return (
         orders.map((order) => {
             order = decorateOrder(order)
             order = decorateFilledOrder(order, previousOrder)
-            previousOrder = order //update the previous order once its decorated
-                return order 
+            previousOrder = order // Update the previous order once it's decorated
+            return order
         })
     )
 }
@@ -73,7 +73,7 @@ const decorateOrder = (order) => {
         etherAmount: ether(etherAmount), 
         tokenAmount: tokens(tokenAmount),
         tokenPrice,
-        formattedTimeStamp: moment.unix(order.timestamp).format('h:mm:ss a M/D')
+        formattedTimestamp: moment.unix(order.timestamp).format('h:mm:ss a M/D')
     })
 }
 
