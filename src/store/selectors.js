@@ -33,7 +33,7 @@ export const filledOrdersSelector = createSelector(
         orders = decorateFilledOrders(orders)
         //sort orders for display
         orders = orders.sort((a,b) => b.timestamp - a.timestamp)
-        console.log(orders)
+        return orders
     }
 )
 
