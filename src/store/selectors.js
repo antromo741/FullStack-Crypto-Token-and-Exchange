@@ -20,13 +20,19 @@ export const contractsLoadedSelector = createSelector(
     exchangeLoaded,
     (tl, el) => (tl && el)
 )
+//all Orders
+const allOrdersLoaded = state => get(state, 'exchange.allIrders.loaded', false)
+const allOrders = state => get(state, 'exchange.allOrders.data', [])
 
+//cancelled Orders
 const cancelledOrdersLoaded = state => get(state, 'exchange.cancelledOrders.loaded', false)
 export const cancelledOrdersLoadedSelector = createSelector(cancelledOrdersLoaded, loaded => loaded)
 
 const cancelledOrders = state => get(state, 'exchange.canelledOrders.data', [])
 export const cancelledOrdersSelector = createSelector(cancelledOrders, o => o)
 
+
+//filled Orders
 const filledOrdersLoaded = state => get(state, 'exchange.filledOrders.loaded', false)
 export const filledOrdersLoadedSelector = createSelector(filledOrdersLoaded, loaded => loaded)
 
@@ -104,3 +110,6 @@ const tokenPriceClass = (tokenPrice, orderId, previousOrder) => {
         return RED // danger
     }
 }
+
+//were saying orderbookloaded depends on the others to be loaded
+const orderBookLoaded = state => cancelledOrdersLoaded(state) && filledOrdersLoaded(state) && allOrdersLoaded(state)
