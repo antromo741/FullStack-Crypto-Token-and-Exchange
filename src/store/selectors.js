@@ -27,6 +27,8 @@ const filledOrders = state => get(state, 'exchange.filledOrders.data', [])
 export const filledOrdersSelector = createSelector(
     filledOrders,
     (orders) => {
+        //sort orders by date ascendidng for price comparasion
+        orders = orders.sort((a,b) => a.timestamp - b.timestamp)
         //Decorate the orders
         orders = decorateFilledOrders(orders)
         //sort orders for display
@@ -38,7 +40,10 @@ export const filledOrdersSelector = createSelector(
 const decorateFilledOrders = (orders) => {
     return(
         orders.map((order) => {
-            return order = decorateOrder(order)
+            order = decorateOrder(order)
+            order = decorateFilledOrder(order, previousOrder)
+            previousOrder = order //update the previous order once its decorated
+                return order 
         })
     )
 }
@@ -68,4 +73,23 @@ const decorateOrder = (order) => {
         tokenPrice,
         formattedTimeStamp: moment.unix(order.timestamp).format('h:mm:ss a M/D')
     })
+}
+
+const decorateFilledOrder = (order, previousOrder) => {
+    return({
+        ...order,
+        takenPriceClass: tokenPriceClass(order.tokenPrice, order.id, previousOrder)
+    })
+}
+
+const tokenPriceClass = (tokenPrice, orderId, previousOrder) => {
+    //show green if order price higher than the previous
+    //show red if order price lower than the prev
+
+    if(previousOrder.tokenPrice <= tokenPrice ){
+        return GREEN //success
+    } else {
+        return RED //Danger
+    }
+    
 }
