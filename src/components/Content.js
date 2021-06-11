@@ -24,6 +24,8 @@ render() {
         <div>
             <Trades />
             <OrderBook />
+            
+           
         </div>
         </div>
 
