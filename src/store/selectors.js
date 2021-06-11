@@ -132,12 +132,46 @@ export const orderBookSelector = createSelector(
     openOrders,
     (orders) => {
         //Decorate orders
+        orders = decorateOrderBookOrders(orders)
+        //group orders by order type
+        orders =  groupBy(orders, 'orderType')
+        //fetch buy orders
+        const buyOrders = get(orders, 'buy', [])
+        //Sort buy orders by token price
+        orders = {
+            ...orders,
+            buyOrders: buyOrders.sort((a,b) => b.tokenPrice - a.tokenPrice)
+        }
+        //fetch Sell orders
+        const sellOrders = get(orders, 'sell', [])
+        //Sort sell orders by token price
+        orders = {
+            ...orders,
+            sellOrders: sellOrders.sort((a, b) => b.tokenPrice - a.tokenPrice)
+        }
         return orders
     }
 )
 
-
-
+const decorateOrderBookOrders = (orders) => {
+    return(
+        order.map((order) => {
+            order = decorateOrder(order)
+            order = decorateOrderBookOrder(order)
+            return(order)
+        })
+    )
+}
+ 
+const decorateOrderBookOrder = (order) => {
+    const orderType = order.tokenGive === ETHER_ADDRESS ? 'buy' : 'sell'
+    return({
+        ...order,
+        orderType,
+        orderTypeClass: (orderType === 'buy' ? GREEN : RED),
+        orderFillClass: orderType === 'buy' ? 'sell' : 'buy'
+    })
+}
 
 
 
