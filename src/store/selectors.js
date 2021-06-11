@@ -1,4 +1,4 @@
-import { get } from 'lodash'
+import { get, groupBy, reject } from 'lodash'
 import { createSelector } from 'reselect'
 import moment from 'moment'
 import { ETHER_ADDRESS, GREEN, RED, tokens, ether } from '../helpers'
@@ -155,7 +155,7 @@ export const orderBookSelector = createSelector(
 
 const decorateOrderBookOrders = (orders) => {
     return(
-        order.map((order) => {
+        orders.map((order) => {
             order = decorateOrder(order)
             order = decorateOrderBookOrder(order)
             return(order)

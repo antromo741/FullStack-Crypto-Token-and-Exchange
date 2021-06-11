@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { loadAllOrders } from '../store/interactions'
 import { exchangeSelector } from '../store/selectors'
 import  Trades  from './Trades'
+import OrderBook from './OrderBook'
 class Content extends Component {
     
     
@@ -22,6 +23,7 @@ render() {
         <p>Romo</p>
         <div>
             <Trades />
+            <OrderBook />
         </div>
         </div>
 
