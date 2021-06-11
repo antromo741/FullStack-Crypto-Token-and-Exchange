@@ -126,7 +126,7 @@ const openOrders = state => {
 
 //were saying orderbookloaded depends on the others to be loaded
 const orderBookLoaded = state => cancelledOrdersLoaded(state) && filledOrdersLoaded(state) && allOrdersLoaded(state)
-
+export const orderBookLoadedSelector = createSelector(orderBookLoaded, loaded => loaded)
 //create order Book
 export const orderBookSelector = createSelector(
     openOrders,

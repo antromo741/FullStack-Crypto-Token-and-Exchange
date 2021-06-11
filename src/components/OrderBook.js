@@ -7,8 +7,9 @@ import {
 
 class OrderBook extends Component {
     render() {
+        console.log(this.props.showOrderBook, this.props.orderBook)
         return (
-            <div ckassName="vertical">
+            <div className="vertical">
                 <div className="card bg-dark text-white">
                     <div className="card-header">
                         OrderBook
