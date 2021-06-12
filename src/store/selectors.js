@@ -1,7 +1,8 @@
-import { get, groupBy, reject } from 'lodash'
+import { get, groupBy, reject, maxBy, minBy } from 'lodash'
 import { createSelector } from 'reselect'
 import moment from 'moment'
 import { ETHER_ADDRESS, GREEN, RED, tokens, ether } from '../helpers'
+
 
 const account = state => get(state, 'web3.account')
 export const accountSelector = createSelector(account, a => a)
@@ -258,7 +259,44 @@ const decorateMyOpenOrder = (order, account) => {
 }
 
 
+export const priceChartLoadedSelector = createSelector(filledOrdersLoaded, loaded => loaded)
 
+export const priceChartSelector = createSelector(
+    filledOrders,
+    (orders) => {
+        //sort orders by date ascending
+        orders = orders .sort((a,b) => a.timestamp - b.timestamp)
+        //Deorate Orders -add display attributes
+        orders = orders.map((o) => decorateOrder(o))
+        return({
+            series: [{
+                data: buildGraphData(orders)
+            }]
+        })
+    })
+
+const buildGraphData = (orders) => {
+    //Group orders by ythe hour for the graph
+    orders = groupBy(orders, (o) => moment.unix(o.timestamp).startOf('hour').format())
+    //Get each hour where data exists
+    const hours = Object.keys(orders)
+    //Build the graph series
+    const graphData = hours.map((hour) => {
+        //fetch all the orders for the current hour
+        const group = orders[hour]
+        //calculate prices for high, low, open close
+        const open = group[0] //first order
+        const high = maxBy(group, 'tokenPrice') //high price
+        const low = minBy(group, 'tokenPrice') //low price
+        const close = group[group.length - 1] //last order
+        return({
+            x: new Date(hour),
+            y: [open.tokenPrice, high.tokenPrice, low.tokenPrice, close.tokenPrice]
+
+        })
+    })
+    return graphData
+}
 
 
 
