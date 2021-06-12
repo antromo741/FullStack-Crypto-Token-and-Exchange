@@ -2,10 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Chart from 'react-apexcharts'
 import Spinner from './Spinner'
-import {
-    priceChartLoadedSelector,
-    priceChartSelector
-} from '../store/selectors'
+import { chartOptions, dummyData } from './PriceChart.config'
+//import { priceChartLoadedSelector, priceChartSelector } from '../store/selectors'
 
 const priceSymbol = (lastPriceChange) => {
     let output
@@ -17,13 +15,11 @@ const priceSymbol = (lastPriceChange) => {
     return (output)
 }
 
-const showPriceChart = (priceChart) => {
+const showPriceChart = () => {
     return (
         <div className="price-chart">
-            <div className="price">
-                <h4>ROM/ETH &nbsp; {priceSymbol(priceChart.lastPriceChange)} &nbsp; {priceChart.lastPrice}</h4>
-            </div>
-            <Chart options={chartOptions} series={priceChart.series} type='candlestick' width='100%' height='100%' />
+            
+            <Chart options={chartOptions} series={dummyData} type='candlestick' width='100%' height='100%' />
         </div>
     )
 }
@@ -36,7 +32,7 @@ class PriceChart extends Component {
                     Price Chart
                 </div>
                 <div className="card-body">
-                    {this.props.priceChartLoaded ? showPriceChart(this.props.priceChart) : <Spinner />}
+                    {showPriceChart()}
                 </div>
             </div>
         )
@@ -46,8 +42,8 @@ class PriceChart extends Component {
 function mapStateToProps(state) {
 
     return {
-        priceChartLoaded: priceChartLoadedSelector(state),
-        priceChart: priceChartSelector(state),
+        //priceChartLoaded: priceChartLoadedSelector(state),
+        //priceChart: priceChartSelector(state),
     }
 }
 

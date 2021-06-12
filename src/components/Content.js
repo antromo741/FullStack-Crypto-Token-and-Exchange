@@ -5,6 +5,7 @@ import { exchangeSelector } from '../store/selectors'
 import  Trades  from './Trades'
 import OrderBook from './OrderBook'
 import MyTransactions from './MyTransactions'
+import PriceChart from './PriceChart'
 class Content extends Component {
     
     
@@ -22,7 +23,9 @@ render() {
         <div className="content"> 
             <Trades />
             <OrderBook />
+            <PriceChart />
             <MyTransactions />
+            
             
         </div>
 
