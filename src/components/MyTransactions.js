@@ -33,7 +33,7 @@ const showMyOpenOrders = (myOpenOrders) => {
              {myOpenOrders.map((order) => {
                  return(
                      <tr key={order.id}>
-                         <td className={`text-${order.orderTypeClass}`}>{order.tokenAMount}</td>
+                         <td className={`text-${order.orderTypeClass}`}>{order.tokenAmount}</td>
                          <td className={`text-${order.orderTypeClass}`}>{order.tokenPrice}</td>
                          <td className="text-muted">x</td>
                      </tr>
