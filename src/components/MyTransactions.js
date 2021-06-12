@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Tabs, Tab } from 'react-bootstrap'
+import Spinner from './Spinner'
 
 import {
     myFilledOrdersSelector,
@@ -9,6 +10,38 @@ import {
     myOpenOrdersLoadedSelector,
 } from '../store/selectors'
 
+
+const showMyFilledOrders = (myFilledOrders) => {
+    return(
+        <tbody>
+            { myFilledOrders.map((order) => {
+                return(
+                    <tr key={order.id}> 
+                    <td className="text-muted">{order.formattedTimestamp}</td>
+                    <td className={`text-${order.orderTypeClass}`}>{order.orderSign}{order.tokenAmount}</td>
+                    <td className={`text-${order.orderTypeClass}`}>{order.tokenPrice}</td>
+                    </tr>
+                )
+            })}
+        </tbody>
+    )
+}
+
+const showMyOpenOrders = (myOpenOrders) => {
+    return(
+        <tbody>
+             {myOpenOrders.map((order) => {
+                 return(
+                     <tr key={order.id}>
+                         <td className={`text-${order.orderTypeClass}`}>{order.tokenAMount}</td>
+                         <td className={`text-${order.orderTypeClass}`}>{order.tokenPrice}</td>
+                         <td className="text-muted">x</td>
+                     </tr>
+                 )
+             })}
+        </tbody>
+    )
+}
 
 class MyTransactions extends Component {
     render() {
@@ -23,11 +56,12 @@ class MyTransactions extends Component {
                     <table className="table table-dark table-sm small">
                         <thead>
                             <tr>
-                                <th>TIme</th>
+                                <th>Time</th>
                                 <th>ROM</th>
                                 <th>ROM/ETH</th>
                             </tr>
                         </thead>
+                            {this.props.showMyFilledOrders ? showMyFilledOrders(this.props.myFilledOrders) : <Spinner type="table" />}
                     </table>
                 
                 </Tab>
@@ -40,6 +74,7 @@ class MyTransactions extends Component {
                                 <th>Cancel</th>
                             </tr>
                         </thead>
+                        { this.props.showMyOpenOrders ? showMyOpenOrders(this.props.myOpenOrders) : <Spinner type="table"/>}
                     </table>
                 </Tab>
             </Tabs>
