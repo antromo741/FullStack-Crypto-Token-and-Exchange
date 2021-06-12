@@ -2,6 +2,14 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Tabs, Tab } from 'react-bootstrap'
 
+import {
+    myFilledOrdersSelector,
+    myFilledOrdersLoadedSelector,
+    myOpenOrdersSelector,
+    myOpenOrdersLoadedSelector,
+} from '../store/selectors'
+
+
 class MyTransactions extends Component {
     render() {
         return(
@@ -45,7 +53,10 @@ class MyTransactions extends Component {
 
 function mapStateToProps(state){
     return{
-
+        myFilledOrders: myFilledOrdersSelector(state),
+        showMyFilledOrders: myFilledOrdersLoadedSelector(state),
+        myOpenOrders: myOpenOrdersSelector(state),
+        showMyOpenOrders: myOpenOrdersLoadedSelector(state)
     }
 }
 

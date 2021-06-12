@@ -175,24 +175,25 @@ const decorateOrderBookOrder = (order) => {
     })
 }
 
-export const myFilledOrderLoadedSelector = createSelector(filledOrdersLoaded, loaded => loaded)
+export const myFilledOrdersLoadedSelector = createSelector(filledOrdersLoaded, loaded => loaded)
 
 export const myFilledOrdersSelector = createSelector(
     account,
     filledOrders,
-    (account,filledOrders) => {
+    (account, orders) => {
         //Find orders
         orders = orders.filter((o) => o.user === account || o.userFill === account)
         //Sort by date ascending
         orders = orders.sort((a, b) => a.timestamp - b.timestamp)
         //Decorate orders - add display attributes
         orders = decorateMyFilledOrders(orders, account)
+        return orders
     }
 )
 
 const decorateMyFilledOrders = (orders, account) => {
     return(
-        order.map((order) => {
+        orders.map((order) => {
             order = decorateOrder(order)
             order = decorateMyFilledOrder(order,account)
             return(order)
@@ -201,7 +202,7 @@ const decorateMyFilledOrders = (orders, account) => {
 }
 
 const decorateMyFilledOrder = (order, account) => {
-    const MyOrder = order.user === acount
+    const myOrder = order.user === account
 
     let orderType
     if(myOrder){
@@ -220,7 +221,7 @@ const decorateMyFilledOrder = (order, account) => {
 
 }
 
-export const myOpenOrderLoadedSelector = createSelector(orderBookLoaded, loaded => loaded)
+export const myOpenOrdersLoadedSelector = createSelector(orderBookLoaded, loaded => loaded)
 
 export const myOpenOrdersSelector = createSelector(
     account,
@@ -236,7 +237,7 @@ export const myOpenOrdersSelector = createSelector(
     }
 )
 
-decorateMyOpenOrders = (orders, account) => {
+const decorateMyOpenOrders = (orders, account) => {
     return(
         orders.map((order) => {
             order = decorateOrder(order)
