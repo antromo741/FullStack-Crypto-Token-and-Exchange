@@ -4,6 +4,7 @@ import { loadAllOrders } from '../store/interactions'
 import { exchangeSelector } from '../store/selectors'
 import  Trades  from './Trades'
 import OrderBook from './OrderBook'
+import MyTransactions from './MyTransactions'
 class Content extends Component {
     
     
@@ -19,14 +20,10 @@ class Content extends Component {
 render() {
     return (
         <div className="content"> 
-        <h1>Hello</h1>
-        <p>Romo</p>
-        <div>
             <Trades />
             <OrderBook />
+            <MyTransactions />
             
-           
-        </div>
         </div>
 
     )
