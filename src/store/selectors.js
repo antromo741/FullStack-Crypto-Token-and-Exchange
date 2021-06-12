@@ -220,9 +220,41 @@ const decorateMyFilledOrder = (order, account) => {
 
 }
 
+export const myOpenOrderLoadedSelector = createSelector(orderBookLoaded, loaded => loaded)
 
+export const myOpenOrdersSelector = createSelector(
+    account,
+    openOrders,
+    (account, orders) => {
+        //Filter orders created by current account
+        orders = orders.filter((o) => o.user === account )
+        //Decorate orders - add display attributes
+        orders = decorateMyOpenOrders(orders)
+        // Sort orders by date descending
+        orders = orders.sort((a,b) => b.timestamp - a.timestamp)
+        return orders
+    }
+)
 
+decorateMyOpenOrders = (orders, account) => {
+    return(
+        orders.map((order) => {
+            order = decorateOrder(order)
+            order = decorateMyOpenOrder(order, account)
+            return(order)
+        })
+    )
+}
 
+const decorateMyOpenOrder = (order, account) => {
+    let orderType = order.tokenGive === ETHER_ADDRESS ? 'buy' : 'sell'
+
+    return({
+        ...order,
+        orderType,
+        orderTypeClass: (orderType === 'buy' ? GREEN : RED)
+    })
+}
 
 
 
