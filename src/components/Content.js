@@ -20,13 +20,15 @@ class Content extends Component {
 
 render() {
     return (
-        <div className="content"> 
-            <Trades />
+        <div className="content">
+            <div className="vertical-split">
+            </div>
             <OrderBook />
-            <PriceChart />
-            <MyTransactions />
-            
-            
+            <div className="vertical-split">
+                <PriceChart />
+                <MyTransactions />
+            </div>
+            <Trades />
         </div>
 
     )
