@@ -174,3 +174,59 @@ const decorateOrderBookOrder = (order) => {
         orerFillClass: orderType === 'buy' ? 'sell' : 'buy'
     })
 }
+
+export const myFilledOrderLoadedSelector = createSelector(filledOrdersLoaded, loaded => loaded)
+
+export const myFilledOrdersSelector = createSelector(
+    account,
+    filledOrders,
+    (account,filledOrders) => {
+        //Find orders
+        orders = orders.filter((o) => o.user === account || o.userFill === account)
+        //Sort by date ascending
+        orders = orders.sort((a, b) => a.timestamp - b.timestamp)
+        //Decorate orders - add display attributes
+        orders = decorateMyFilledOrders(orders, account)
+    }
+)
+
+const decorateMyFilledOrders = (orders, account) => {
+    return(
+        order.map((order) => {
+            order = decorateOrder(order)
+            order = decorateMyFilledOrder(order,account)
+            return(order)
+        })
+    )
+}
+
+const decorateMyFilledOrder = (order, account) => {
+    const MyOrder = order.user === acount
+
+    let orderType
+    if(myOrder){
+        orderType = order.tokenGive === ETHER_ADDRESS ? 'buy' : 'sell'
+
+    } else {
+        orderType = order.tokenGive === ETHER_ADDRESS ? 'sell' : 'buy'
+    }
+    
+    return({
+        ...order,
+        orderType,
+        orderTypeClass: (orderType === 'buy' ? GREEN : RED),
+        orederSign: (orderType === 'buy' ? '+' : '-')
+    })
+
+}
+
+
+
+
+
+
+
+
+
+
+
