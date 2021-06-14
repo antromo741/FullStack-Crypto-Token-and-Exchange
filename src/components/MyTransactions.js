@@ -10,6 +10,7 @@ import {
     myOpenOrdersLoadedSelector,
     exchangeSelector,
     accountSelector,
+    orderCancellingSelector,
 } from '../store/selectors'
 import { cancelOrder } from '../store/interactions'
 
@@ -98,12 +99,16 @@ class MyTransactions extends Component {
 }
 
 function mapStateToProps(state){
+    const myOpenOrdersLoaded= myOpenOrdersLoadedSelector(state)
+    const orderCancelling = orderCancellingSelector(state)
+    
     return{
         myFilledOrders: myFilledOrdersSelector(state),
         showMyFilledOrders: myFilledOrdersLoadedSelector(state),
         myOpenOrders: myOpenOrdersSelector(state),
-        showMyOpenOrders: myOpenOrdersLoadedSelector(state),
-        exchange: exchangeSelector(state),account: accountSelector(state)
+        showMyOpenOrders: myOpenOrdersLoaded && !orderCancelling,
+        exchange: exchangeSelector(state),
+        account: accountSelector(state)
 
     }
 }
