@@ -97,7 +97,7 @@ export const cancelOrder = (dispatch, exchange, order, account) => {
         })
 }
 
-export const subscribeToEvents = async (dispatch, exchange) => {
+export const subscribeToEvents = async (exchange, dispatch) => {
     exchange.events.Cancel({}, (error, event) => {
         dispatch(orderCancelled(event.returnValues))
     })
