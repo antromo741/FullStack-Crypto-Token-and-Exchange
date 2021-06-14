@@ -63,3 +63,9 @@ export function orderCancelled(order) {
         order
     }
 }
+
+export function orderFilling() {
+    return {
+        type: 'ORDER_FILLING',
+    }
+}

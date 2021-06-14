@@ -46,6 +46,9 @@ function exchange(state = {}, action) {
                     ]
                 }
             }
+        case 'ORDER_FILLING':
+            return{ ...state, orderFilling: true }
+            
         default:
             return state
     }
