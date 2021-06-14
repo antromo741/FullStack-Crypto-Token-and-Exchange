@@ -68,7 +68,7 @@ const decorateOrder = (order) => {
     let etherAmount
     let tokenAmount
 
-    if (order.tokenGive == ETHER_ADDRESS) {
+    if (order.tokenGive === ETHER_ADDRESS) {
         etherAmount = order.amountGive
         tokenAmount = order.amountGet
     } else {

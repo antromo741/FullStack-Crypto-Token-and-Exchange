@@ -69,3 +69,10 @@ export function orderFilling() {
         type: 'ORDER_FILLING',
     }
 }
+
+export function orderFilled(order) {
+    return {
+        type: 'ORDER_FILLED',
+        order
+    }
+}
