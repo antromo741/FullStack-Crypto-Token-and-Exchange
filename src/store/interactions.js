@@ -84,9 +84,9 @@ export const loadAllOrders = async (exchange, dispatch) => {
     //add all open orders to the redux store
     dispatch(allOrdersLoaded(allOrders))
     
-
-    const cancelOrder = (dispatch, exchange, order, account ) => {
-        exchange.methods.cancelOrder(order.id).send({ from: account })
+}
+export const cancelOrder = (dispatch, exchange, order, account) => {
+    exchange.methods.cancelOrder(order.id).send({ from: account })
         .on('transactionHash', (hash) => {
             dispatch(orderCancelling())
         })
@@ -95,5 +95,3 @@ export const loadAllOrders = async (exchange, dispatch) => {
             window.alert('There was an error!')
         })
     }
-    
-}
