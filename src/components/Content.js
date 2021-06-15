@@ -6,6 +6,7 @@ import  Trades  from './Trades'
 import OrderBook from './OrderBook'
 import MyTransactions from './MyTransactions'
 import PriceChart from './PriceChart'
+import Balance from './Balance'
 class Content extends Component {
     
     
@@ -24,6 +25,7 @@ render() {
     return (
         <div className="content">
             <div className="vertical-split">
+                <Balance />
             </div>
             <OrderBook />
             <div className="vertical-split">
