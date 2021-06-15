@@ -12,6 +12,10 @@ import {
     orderCancelled,
     orderFilling,
     orderFilled,
+    etherBalanceLoaded,
+    tokenBalanceLoaded,
+    exchangeEtherBalanceLoaded,
+    exchangeTokenBalanceLoaded
 
 } from './actions'
 import Token from '../abis/Token.json'
@@ -120,5 +124,27 @@ export const fillOrder = (dispatch, exchange, order, account) => {
 }
 
 export const loadBalances = async (dispatch, web3, exchange, token, account) => {
-    
+    if (typeof account !== 'undefined') {
+        // Ether balance in wallet
+        const etherBalance = await web3.eth.getBalance(account)
+        dispatch(etherBalanceLoaded(etherBalance))
+
+        // Token balance in wallet
+        const tokenBalance = await token.methods.balanceOf(account).call()
+        dispatch(tokenBalanceLoaded(tokenBalance))
+
+        // Ether balance in exchange
+        const exchangeEtherBalance = await exchange.methods.balanceOf(ETHER_ADDRESS, account).call()
+        dispatch(exchangeEtherBalanceLoaded(exchangeEtherBalance))
+
+        // Token balance in exchange
+        const exchangeTokenBalance = await exchange.methods.balanceOf(token.options.address, account).call()
+        dispatch(exchangeTokenBalanceLoaded(exchangeTokenBalance))
+
+        // Trigger all balances loaded
+        dispatch(balancesLoaded())
+    } else {
+        window.alert('Please login with MetaMask')
+    }
 }
+
