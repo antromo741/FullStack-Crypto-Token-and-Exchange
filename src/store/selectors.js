@@ -321,3 +321,8 @@ export const orderCancellingSelector = createSelector(orderCancelling, status =>
 
 const orderFilling = state => get(state, 'exchange.orderFilling', false)
 export const orderFillingSelector = createSelector(orderFilling, status => status)
+
+const balancesLoading = state => get(state, 'exchange.balancesLoading' , true)
+export const balancesLoadingSelector = createSelector(balancesLoading, status => status)
+
+

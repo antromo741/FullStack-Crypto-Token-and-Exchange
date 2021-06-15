@@ -71,6 +71,18 @@ function exchange(state = {}, action) {
         case 'ORDER_FILLING':
             return{ ...state, orderFilling: true }
 
+        case 'EXCHANGE_ETHER_BALANCE_LOADED':
+            return{ ...state, etherBalance: action.balance }
+        
+            case 'EXCHANGE_TOKEN_BALANCE_LOADED': 
+            return { ...state, tokenBalance: action.balance }  
+
+        case 'BALANCES_LOADING':
+            return {...state, balancesLoading: true }
+       
+        case 'BALANCES_LOADED':
+            return { ...state, balancesLoaded: false }
+
         default:
             return state
     }
