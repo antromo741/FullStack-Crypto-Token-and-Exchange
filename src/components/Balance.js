@@ -1,11 +1,17 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { loadBalnces } from '../store/interactions'
+import { loadBalances } from '../store/interactions'
 import {
     web3Selector, 
     exchangeSelector,
     tokenSelector, 
-    accountSelector
+    accountSelector,
+    balancesLoadingSelector,
+    etherBalanceSelector,
+    tokenBalanceSelector,
+    exchangeEtherBalanceSelector,
+    exchangeTokenBalanceSelector,
+
 } from '../store/selectors'
 
 class Balance extends Component {
@@ -37,6 +43,11 @@ function mapStateToProps(state) {
         exchange: exchangeSelector(state),
         token: tokenSelector(state),
         web3: web3Selector(state),
+        etherBalancne: etherBalanceSelector(state),
+        tokenBalance: tokenBalanceSelector(state),
+        exchangeEtherBalance: exchangeEtherBalanceSelector(state),
+        exchangeTokenBalance: exchangeTokenBalanceSelector(state),
+        balncesLoading: balancesLoadingSelector(state),
     }
 }
 

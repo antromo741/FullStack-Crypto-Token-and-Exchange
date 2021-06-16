@@ -1,5 +1,6 @@
 import '@metamask/legacy-web3'
 import Web3 from 'web3';
+import { ETHER_ADDRESS } from '../helpers'
 import {
     web3Loaded,
     web3AccountLoaded,
@@ -15,7 +16,8 @@ import {
     etherBalanceLoaded,
     tokenBalanceLoaded,
     exchangeEtherBalanceLoaded,
-    exchangeTokenBalanceLoaded
+    exchangeTokenBalanceLoaded,
+    balancesLoaded,
 
 } from './actions'
 import Token from '../abis/Token.json'

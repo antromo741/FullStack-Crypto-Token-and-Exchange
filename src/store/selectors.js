@@ -340,9 +340,17 @@ export const tokenBalanceSelector = createSelector(
     }
 )
 
-const exchangeEtherBalance = stat => get(state, 'exchange.etherBalance', 0)
+const exchangeEtherBalance = state => get(state, 'exchange.etherBalance', 0)
 export const exchangeEtherBalanceSelector = createSelector(
     exchangeEtherBalance,
+    (balance) => {
+        return formatBalance(balance)
+    }
+)
+
+const exchangeTokenBalance = state => get(state, 'exchange.tokenBalance', 0)
+export const exchangeTokenBalanceSelector = createSelector(
+    exchangeTokenBalance,
     (balance) => {
         return formatBalance(balance)
     }
