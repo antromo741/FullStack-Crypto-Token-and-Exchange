@@ -1,7 +1,7 @@
 import { get, groupBy, reject, maxBy, minBy } from 'lodash'
 import { createSelector } from 'reselect'
 import moment from 'moment'
-import { ETHER_ADDRESS, GREEN, RED, tokens, ether, formatBalance } from '../helpers'
+import { ETHER_ADDRESS, GREEN, RED, ether, tokens, formatBalance } from '../helpers'
 
 
 const account = state => get(state, 'web3.account')
@@ -188,22 +188,22 @@ export const myFilledOrdersSelector = createSelector(
     account,
     filledOrders,
     (account, orders) => {
-        //Find orders
+        // Find our orders
         orders = orders.filter((o) => o.user === account || o.userFill === account)
-        //Sort by date ascending
+        // Sort by date ascending
         orders = orders.sort((a, b) => a.timestamp - b.timestamp)
-        //Decorate orders - add display attributes
+        // Decorate orders - add display attributes
         orders = decorateMyFilledOrders(orders, account)
         return orders
     }
 )
 
 const decorateMyFilledOrders = (orders, account) => {
-    return(
+    return (
         orders.map((order) => {
             order = decorateOrder(order)
-            order = decorateMyFilledOrder(order,account)
-            return(order)
+            order = decorateMyFilledOrder(order, account)
+            return (order)
         })
     )
 }
@@ -212,20 +212,18 @@ const decorateMyFilledOrder = (order, account) => {
     const myOrder = order.user === account
 
     let orderType
-    if(myOrder){
+    if (myOrder) {
         orderType = order.tokenGive === ETHER_ADDRESS ? 'buy' : 'sell'
-
     } else {
         orderType = order.tokenGive === ETHER_ADDRESS ? 'sell' : 'buy'
     }
-    
-    return({
+
+    return ({
         ...order,
         orderType,
         orderTypeClass: (orderType === 'buy' ? GREEN : RED),
-        orederSign: (orderType === 'buy' ? '+' : '-')
+        orderSign: (orderType === 'buy' ? '+' : '-')
     })
-
 }
 
 export const myOpenOrdersLoadedSelector = createSelector(orderBookLoaded, loaded => loaded)
@@ -234,22 +232,22 @@ export const myOpenOrdersSelector = createSelector(
     account,
     openOrders,
     (account, orders) => {
-        //Filter orders created by current account
-        orders = orders.filter((o) => o.user === account )
-        //Decorate orders - add display attributes
+        // Filter orders created by current account
+        orders = orders.filter((o) => o.user === account)
+        // Decorate orders - add display attributes
         orders = decorateMyOpenOrders(orders)
         // Sort orders by date descending
-        orders = orders.sort((a,b) => b.timestamp - a.timestamp)
+        orders = orders.sort((a, b) => b.timestamp - a.timestamp)
         return orders
     }
 )
 
 const decorateMyOpenOrders = (orders, account) => {
-    return(
+    return (
         orders.map((order) => {
             order = decorateOrder(order)
             order = decorateMyOpenOrder(order, account)
-            return(order)
+            return (order)
         })
     )
 }
@@ -257,13 +255,12 @@ const decorateMyOpenOrders = (orders, account) => {
 const decorateMyOpenOrder = (order, account) => {
     let orderType = order.tokenGive === ETHER_ADDRESS ? 'buy' : 'sell'
 
-    return({
+    return ({
         ...order,
         orderType,
         orderTypeClass: (orderType === 'buy' ? GREEN : RED)
     })
 }
-
 
 export const priceChartLoadedSelector = createSelector(filledOrdersLoaded, loaded => loaded)
 
@@ -322,19 +319,21 @@ export const orderCancellingSelector = createSelector(orderCancelling, status =>
 const orderFilling = state => get(state, 'exchange.orderFilling', false)
 export const orderFillingSelector = createSelector(orderFilling, status => status)
 
-const balancesLoading = state => get(state, 'exchange.balancesLoading' , true)
+// BALANCES
+const balancesLoading = state => get(state, 'exchange.balancesLoading', true)
 export const balancesLoadingSelector = createSelector(balancesLoading, status => status)
 
 const etherBalance = state => get(state, 'web3.balance', 0)
 export const etherBalanceSelector = createSelector(
-    etherBalance, (balance) => {
+    etherBalance,
+    (balance) => {
         return formatBalance(balance)
     }
 )
 
-const tokenBalance = state => get(state, 'token.balance', 0 )
+const tokenBalance = state => get(state, 'token.balance', 0)
 export const tokenBalanceSelector = createSelector(
-    tokenBalance, 
+    tokenBalance,
     (balance) => {
         return formatBalance(balance)
     }
@@ -356,3 +355,14 @@ export const exchangeTokenBalanceSelector = createSelector(
     }
 )
 
+const etherDepositAmount = state => get(state, 'exchange.etherDepositAmount', null)
+export const etherDepositAmountSelector = createSelector(etherDepositAmount, amount => amount)
+
+const etherWithdrawAmount = state => get(state, 'exchange.etherWithdrawAmount', null)
+export const etherWithdrawAmountSelector = createSelector(etherWithdrawAmount, amount => amount)
+
+const tokenDepositAmount = state => get(state, 'exchange.tokenDepositAmount', null)
+export const tokenDepositAmountSelector = createSelector(tokenDepositAmount, amount => amount)
+
+const tokenWithdrawAmount = state => get(state, 'exchange.tokenWithdrawAmount', null)
+export const tokenWithdrawAmountSelector = createSelector(tokenWithdrawAmount, amount => amount)

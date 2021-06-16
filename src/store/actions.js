@@ -1,12 +1,11 @@
-//web3
+// WEB3
 export function web3Loaded(connection) {
-    return { 
+    return {
         type: 'WEB3_LOADED',
         connection
     }
 }
 
-//token
 export function web3AccountLoaded(account) {
     return {
         type: 'WEB3_ACCOUNT_LOADED',
@@ -14,6 +13,7 @@ export function web3AccountLoaded(account) {
     }
 }
 
+// TOKEN
 export function tokenLoaded(contract) {
     return {
         type: 'TOKEN_LOADED',
@@ -21,7 +21,7 @@ export function tokenLoaded(contract) {
     }
 }
 
-//exchange
+// EXCHANGE
 export function exchangeLoaded(contract) {
     return {
         type: 'EXCHANGE_LOADED',
@@ -35,7 +35,6 @@ export function cancelledOrdersLoaded(cancelledOrders) {
         cancelledOrders
     }
 }
-
 
 export function filledOrdersLoaded(filledOrders) {
     return {
@@ -51,6 +50,7 @@ export function allOrdersLoaded(allOrders) {
     }
 }
 
+// Cancel Order
 export function orderCancelling() {
     return {
         type: 'ORDER_CANCELLING'
@@ -64,9 +64,10 @@ export function orderCancelled(order) {
     }
 }
 
+// Fill Order
 export function orderFilling() {
     return {
-        type: 'ORDER_FILLING',
+        type: 'ORDER_FILLING'
     }
 }
 
@@ -77,11 +78,12 @@ export function orderFilled(order) {
     }
 }
 
+// Balances
 export function etherBalanceLoaded(balance) {
-   return {
-       type: 'ETHER_BALANCE_LOADED',
-       balance
-   }
+    return {
+        type: 'ETHER_BALANCE_LOADED',
+        balance
+    }
 }
 
 export function tokenBalanceLoaded(balance) {
@@ -107,14 +109,40 @@ export function exchangeTokenBalanceLoaded(balance) {
 
 export function balancesLoaded() {
     return {
-        type: 'BALANCES_LOADED',
-        
+        type: 'BALANCES_LOADED'
     }
 }
 
 export function balancesLoading() {
     return {
-        type: 'BALANCES_LOADING',
-        
+        type: 'BALANCES_LOADING'
+    }
+}
+
+export function etherDepositAmountChanged(amount) {
+    return {
+        type: 'ETHER_DEPOSIT_AMOUNT_CHANGED',
+        amount
+    }
+}
+
+export function etherWithdrawAmountChanged(amount) {
+    return {
+        type: 'ETHER_WITHDRAW_AMOUNT_CHANGED',
+        amount
+    }
+}
+
+export function tokenDepositAmountChanged(amount) {
+    return {
+        type: 'TOKEN_DEPOSIT_AMOUNT_CHANGED',
+        amount
+    }
+}
+
+export function tokenWithdrawAmountChanged(amount) {
+    return {
+        type: 'TOKEN_WITHDRAW_AMOUNT_CHANGED',
+        amount
     }
 }
