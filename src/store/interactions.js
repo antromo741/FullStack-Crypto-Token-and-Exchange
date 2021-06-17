@@ -17,6 +17,8 @@ import {
     exchangeTokenBalanceLoaded,
     balancesLoaded,
     balancesLoading,
+    buyOrderMaking,
+    sellOrderMaking,
     orderMade,
 } from './actions'
 import Token from '../abis/Token.json'
