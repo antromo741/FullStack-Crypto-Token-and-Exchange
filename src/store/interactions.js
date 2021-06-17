@@ -205,3 +205,36 @@ export const withdrawToken = (dispatch, exchange, web3, token, amount, account) 
             window.alert(`There was an error!`)
         })
 }
+
+export const makeBuyOrder = (dispatch, exchange, token, web3, order, account) => {
+    const tokenGet = token.options.address
+    const amountGet = web3.utils.toWei(order.amount, 'ether')
+    const tokenGive = ETHER_ADDRESS
+    const amountGive = web3.utils.toWei((order.amount * order.price).toString(), 'ether')
+
+    exchange.methods.makeOrder(tokenGet, amountGet, tokenGive, amountGive).send({ from: account })
+        .on('transactionHash', (hash) => {
+            dispatch(buyOrderMaking())
+        })
+        .on('error', (error) => {
+            console.error(error)
+            window.alert(`There was an error!`)
+        })
+}
+
+export const makeSellOrder = (dispatch, exchange, token, web3, order, account) => {
+    const tokenGet = ETHER_ADDRESS
+    const amountGet = web3.utils.toWei((order.amount * order.price).toString(), 'ether')
+    const tokenGive = token.options.address
+    const amountGive = web3.utils.toWei(order.amount, 'ether')
+
+    exchange.methods.makeOrder(tokenGet, amountGet, tokenGive, amountGive).send({ from: account })
+        .on('transactionHash', (hash) => {
+            dispatch(sellOrderMaking())
+        })
+        .on('error', (error) => {
+            console.error(error)
+            window.alert(`There was an error!`)
+        })
+}
+ 
