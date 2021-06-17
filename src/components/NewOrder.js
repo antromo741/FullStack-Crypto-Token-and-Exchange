@@ -133,20 +133,21 @@ class NewOrder extends Component {
 }
 
 
-const mapStateToProps = (state) => {
+function mapStateToProps(state) {
     const buyOrder = buyOrderSelector(state)
     const sellOrder = sellOrderSelector(state)
 
-    return{
+    return {
         account: accountSelector(state),
         exchange: exchangeSelector(state),
         token: tokenSelector(state),
-        web3Selector: web3Selector(state),
+        web3: web3Selector(state),
         buyOrder,
         sellOrder,
-        showForm: !buyOrder.maling && !sellOrder.making
+        showForm: !buyOrder.making && !sellOrder.making,
+        showBuyTotal: buyOrder.amount && buyOrder.price,
+        showSellTotal: sellOrder.amount && sellOrder.price
     }
 }
-
 
 export default connect(mapStateToProps)(NewOrder)
