@@ -36,10 +36,12 @@ const showForm = (props) => {
         showBuyTotal,
         showSellTotal
     } = props
-   
+
     return (
         <Tabs defaultActiveKey="buy" className="bg-dark text-white">
+
             <Tab eventKey="buy" title="Buy" className="bg-dark">
+
                 <form onSubmit={(event) => {
                     event.preventDefault()
                     makeBuyOrder(dispatch, exchange, token, web3, buyOrder, account)
@@ -71,9 +73,42 @@ const showForm = (props) => {
                     <button type="submit" className="btn btn-primary btn-sm btn-block">Buy Order</button>
                     {showBuyTotal ? <small>Total: {buyOrder.amount * buyOrder.price} ETH</small> : null}
                 </form>
-               
-            </Tab>           
+
+            </Tab>
+
             <Tab eventKey="sell" title="Sell" className="bg-dark">
+
+                <form onSubmit={(event) => {
+                    event.preventDefault()
+                    makeSellOrder(dispatch, exchange, token, web3, sellOrder, account)
+                }}>
+                    <div className="form-group small">
+                        <label>Buy Sell (ROM)</label>
+                        <div className="input-group">
+                            <input
+                                type="text"
+                                className="form-control form-control-sm bg-dark text-white"
+                                placeholder="Sell amount"
+                                onChange={(e) => dispatch(sellOrderAmountChanged(e.target.value))}
+                                required
+                            />
+                        </div>
+                    </div>
+                    <div className="form-group small">
+                        <label>Sell Price</label>
+                        <div className="input-group">
+                            <input
+                                type="text"
+                                className="form-control form-control-sm bg-dark text-white"
+                                placeholder="Sell Price"
+                                onChange={(e) => dispatch(sellOrderPriceChanged(e.target.value))}
+                                required
+                            />
+                        </div>
+                    </div>
+                    <button type="submit" className="btn btn-primary btn-sm btn-block">Sell Order</button>
+                    {showSellTotal ? <small>Total: {sellOrder.amount * sellOrder.price} ETH</small> : null}
+                </form>
 
             </Tab>
         </Tabs>
