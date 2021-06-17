@@ -18,6 +18,12 @@ import {
     sellOrderPriceChanged,
 } from '../store/actions'
 
+import {
+    makeBuyOrder,
+    makeSellOrder
+} from '../store/interactions'
+
+
 const showForm = (props) => {
     return (
         <Tabs defaultActiveKey="buy" className="bg-dark text-white">

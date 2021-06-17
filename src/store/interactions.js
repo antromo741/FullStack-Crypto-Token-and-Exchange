@@ -16,7 +16,8 @@ import {
     exchangeEtherBalanceLoaded,
     exchangeTokenBalanceLoaded,
     balancesLoaded,
-    balancesLoading
+    balancesLoading,
+    orderMade,
 } from './actions'
 import Token from '../abis/Token.json'
 import Exchange from '../abis/Exchange.json'
@@ -107,6 +108,10 @@ export const subscribeToEvents = async (exchange, dispatch) => {
 
     exchange.events.Withdraw({}, (error, event) => {
         dispatch(balancesLoaded())
+    })
+
+    exchange.events.Order({}, (error, event) => {
+        dispatch(orderMade(event.returnValues))
     })
 }
 
