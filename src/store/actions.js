@@ -146,3 +146,24 @@ export function tokenWithdrawAmountChanged(amount) {
         amount
     }
 }
+
+// Buy Order
+export function buyOrderAmountChanged(amount) {
+    return {
+        type: 'BUY_ORDER_AMOUNT_CHANGED',
+        amount
+    }
+}
+
+export function buyOrderPriceChanged(price) {
+    return {
+        type: 'BUY_ORDER_PRICE_CHANGED',
+        price
+    }
+}
+
+export function buyOrderMaking(price) {
+    return {
+        type: 'BUY_ORDER_MAKING'
+    }
+}
