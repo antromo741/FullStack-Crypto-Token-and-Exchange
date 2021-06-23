@@ -16,28 +16,29 @@ Also refer to the setup video as well for further clarification
 
 Things you will need to have if you want to use the kovan test network for development purposes:
 
-The Metamask wallet chrome extension to connect to the exchange.
+-The Metamask wallet chrome extension to connect to the exchange.
 
-Two wallets containing Kovan eth which I will describe below how to get in a moment.
+-Two wallets containing Kovan eth which I will describe below how to get in a moment.
 
-You must take the two wallets private key’s and and add them to a .env file.
+-You must take the two wallets private key’s and and add them to a .env file.
 
-You will need an Infura API key as well and add that to the env file, if you look in the truffle config file you will notice how the privatekeys and infura_api_key functions work with the metamask wallet
+-You will need an Infura API key as well and add that to the env file, if you look in the truffle config file you will notice how the privatekeys and infura_api_key functions work with the metamask wallet
 
 
 
-Things you will need to work on a local blockchain and run tests
+Things you will need to work on a local blockchain and run tests:
 
-The Metamask wallet chrome extension to connect to the exchange.
+-The Metamask wallet chrome extension to connect to the exchange.
 
-A ganache workspace, you can quickstart and it will connect, be sure to go to settings, go to chain and set your hardfork to Petersburg so the account value is displayed properly on metamask.
+-A ganache workspace, you can quickstart and it will connect, be sure to go to settings, go to chain and set your hardfork to Petersburg so the account value is displayed properly on metamask.
 
-You can take the first two wallets containing 100 ETH each and import them into metamask. Go to metamask, go to settings, go to import account, copy paste the private key by going to Ganache and clicking the key symbol to the far right to display the private key.
+-You can take the first two wallets containing 100 ETH each and import them into metamask. Go to metamask, go to settings, go to import account, copy paste the private key by going to Ganache and clicking the key symbol to the far right to display the private key.
 
-You must take the two wallets private key’s and and add them to a .env file.
+-You must take the two wallets private key’s and and add them to a .env file.
 
-You will need an Infura API key as well and add that to the env file, if you look in the truffle config file you will notice how the privatekeys and infura_api_key functions work with the metamask wallet
+-You will need an Infura API key as well and add that to the env file, if you look in the truffle config file you will notice how the privatekeys and infura_api_key functions work with the metamask wallet
 
+G to the command line and run
 
 -Run npm install and install all the dependencies 
 
