@@ -1,70 +1,70 @@
-# Getting Started with Create React App
+Hello Welcome To the Romulon Token Exchange
+This Dapp currently has the capabilities to make transactions on the Kovan Test Network.
+Note that this is still in development and changes will be added overtime.
+If you would like help building you own crypto exchange please dont hesitate to message me.
+Sharing knowledge is what makes us stronger!
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+Instructions on how to use this dapp
 
-In the project directory, you can run:
+Also refer to the setup video as well for further clarification
 
-### `yarn start`
+Things you will need to have if you want to use the kovan test network for development purposes:
+The Metamask wallet chrome extension to connect to the exchange.
+Two wallets containing Kovan eth which I will describe below how to get in a moment.
+You must take the two wallets private key’s and and add them to a .env file.
+You will need an Infura API key as well and add that to the env file, if you look in the truffle config file you will notice how the privatekeys and infura_api_key functions work with the metamask wallet
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Things you will need to work on a local blockchain and run tests
+The Metamask wallet chrome extension to connect to the exchange.
+A ganache workspace, you can quickstart and it will connect, be sure to go to settings, go to chain and set your hardfork to Petersburg so the account value is displayed properly on metamask.
+You can take the first two wallets containing 100 ETH each and import them into metamask. Go to metamask, go to settings, go to import account, copy paste the private key by going to Ganache and clicking the key symbol to the far right to display the private key.
+You must take the two wallets private key’s and and add them to a .env file.
+You will need an Infura API key as well and add that to the env file, if you look in the truffle config file you will notice how the privatekeys and infura_api_key functions work with the metamask wallet
+-Run npm install and install all the dependencies 
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+-Start up the local server with npm start
 
-### `yarn test`
+-To use a private network on metamask go to settings go to networks, add private network, the URl we use is from Ganache and looks like this HTTP://127.0.0.1:7545
+-Now any tests we run and transactions we make will be saved on Ganache
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+NOTE: I use windows terminal with ubuntu for my command line
 
-### `yarn build`
+-cd into the project directory and we are going to start running some truffle commands
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+-If we are on thePrivate network, using Ganache we are going to go to the command line and type this:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+truffle migrate
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+-This will run our contracts on the private network connected to Ganache.
+-Now the exchange will show some information, but if we want to have some orders to give the exchange some data we can run:
 
-### `yarn eject`
+truffle exec scripts/seed-exchange.js 
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+-This will make some transactions and a few orders that we can fill with the connected account.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Now you are set up to make transactions on the private network connected to Ganache.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+____________________________________________________________________________
+____________________________________________________________________________
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+-If we are on the Kovan test network, got to this website https://gitter.im/kovan-testnet/faucet#
+And post your account address on there, and you will get sent Kovan ETH; be careful you can only request once a day, but it will give you enough Kovan ETH to run the seeded data.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+-We are going to go to the command line and type this:
 
-### Code Splitting
+truffle migrate --network kovan
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+-This will run our contracts on the kovan test network
+-Now the exchange will show some data but if we want to have some orders to give the exchange some data we can run:
 
-### Analyzing the Bundle Size
+truffle exec scripts/seed-exchange.js --network kovan
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+-This will make some transactions and a few orders that we can fill with the connected account, all the transactions will also be available on etherscan.
 
-### Making a Progressive Web App
+Now you are set up to make transactions on the Kovan Test network
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
 
-### Advanced Configuration
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
